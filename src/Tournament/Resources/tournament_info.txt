@@ -1,0 +1,7 @@
+Brandon,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/, python Brandon.py
+Carter,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/, python Carter.py
+Charlie,WindowsExeComputer,/Users/faumac/Desktop/Connect_4_bot/,Charlie.exe
+Justin,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/, python Justin.py
+Logan,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/, python Logan.py
+Ben5,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/, python Ben.py
+Lisheng,WindowsExeComputer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Lisheng.exe

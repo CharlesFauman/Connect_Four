@@ -6,6 +6,11 @@ import java.util.Scanner;
  * We will get this players input from System.in. As it is a human player, we don't store much here
  */
 public class TextHumanPlayer extends Player{
+	
+	public TextHumanPlayer(String name) {
+		this.name = name;
+	}
+	
 	@Override
 	/**
 	 * We get text based human input from System.in using a Scanner

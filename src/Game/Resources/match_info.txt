@@ -1,0 +1,2 @@
+You!,TextHumanPlayer
+Charlie,WindowsExeComputer,/Users/faumac/Desktop/Connect_4_bot/,Charlie.exe

@@ -14,6 +14,7 @@ public class TextView extends View{
 	private int[][] board;
 	private int width, height;
 	private int player_turn;
+	private String first_player_name, second_player_name;
 	
 	private void PrintBoard() {
 		System.out.println("board:");
@@ -33,8 +34,12 @@ public class TextView extends View{
 		System.out.println();
 	}
 	
-	public TextView(int width, int height, int connect_number) {
+	public TextView(String first_player_name, String second_player_name, int width, int height, int connect_number) {
 		System.out.println("Welcome to Connect 4 text view!");
+		System.out.println("First player: " + first_player_name);
+		System.out.println("Second player: " + second_player_name);
+		this.first_player_name = first_player_name;
+		this.second_player_name = second_player_name;
 		this.width = width;
 		this.height = height;
 		this.board = new int[width][height];
@@ -42,8 +47,8 @@ public class TextView extends View{
 		PrintBoard();
 	}
 	
-	public TextView() {
-		this(7,6,4);
+	public TextView(String first_player_name, String second_player_name) {
+		this(first_player_name, second_player_name, 7,6,4);
 	}
 	
 	
@@ -57,7 +62,7 @@ public class TextView extends View{
 	
 	@Override
 	public void NotifyIllegalMove(int column) {
-		System.out.println("Oops! that was an illegal move: " + column);
+		System.out.println("Oops! that was an illegal move: " + (column+1));
 		NotifyWin();
 	}
 

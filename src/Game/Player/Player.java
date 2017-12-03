@@ -8,7 +8,10 @@ import java.io.IOException;
  *
  */
 public abstract class Player {
-
+	protected String name = "not named :(";
+	public String GetName() {
+		return name;
+	}
 	public abstract int GetMove() throws IOException;
 	public abstract void PlayOpponentMove(int column, int row) throws IOException;
 	public abstract void NotifyGameOver() throws IOException;

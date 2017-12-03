@@ -1,6 +1,10 @@
 package Game.Controller;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException; 	// if an IO process doesn't execute correctly, throw an error
+import java.util.ArrayList;
+import java.util.List;
 // to make sure external calls happen fast enough
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -30,29 +34,18 @@ public class Game {
 		// This will be used to make sure external calls (to programs) run in the right amount of time!
 		final ExecutorService service = Executors.newSingleThreadExecutor();
 
-		// initializing the model
+		// initialize the model (always the same)
 		Model model = new Model();
 		
-		// using matches
-//		View view = match_info.GenerateView();
-//		Player first_player = match_info.GenerateFirstPlayer();
-//		Player second_player = match_info.GenerateSecondPlayer();
-				
-		//using old stuff
-		View view = new GUIView();
-		// DECLARE PLAYERS HERE
+		// initialize the players (dependent on match_info)
+		Player first_player = match_info.GenerateFirstPlayer();
+		Player second_player = match_info.GenerateSecondPlayer();
 		
-		Player second_player = new TextHumanPlayer();
-		Player first_player = new TextHumanPlayer();
-//		Player second_player = new TextHumanPlayer();
-			
-//		Player first_player = new WindowsExeComputer("/Users/faumac/Desktop/Connect_4_bot/", "Charlie.exe", 1);
-//		Player second_player = new WindowsExeComputer("/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/", "Lisheng.exe", 2);
+		// initialize the view (dependent on match_info)
+		View view = match_info.GenerateView();
 		
-//		Player first_player = new Python3Computer("/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/", "python Sinclair.py", 1);
-//		Player second_player = new Python3Computer("/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/", "python Ben.py", 2);
-				
-		// play the game. Set move to first player
+		
+		// play the game. Set win to a nonsense value and set move to first player
 		int win = -2;
 		int move = 1;
 		try {
@@ -130,8 +123,20 @@ public class Game {
 	public static void main(String[] args) {
 		// this is where we start. Attempt to start the game
 		try {
+			List<String[]> player_infos = new ArrayList<String[]>();
 			
-			MatchInfo m = new MatchInfo("GUIView", new String[]{"TextHumanPlayer"}, new String[]{"TextHumanPlayer"});
+			try(BufferedReader tournament_reader = new BufferedReader( new FileReader("src/Game/Resources/match_info.txt"));){
+				String line;
+				while((line = tournament_reader.readLine()) != null) {
+					String[] split_line = line.split(",");
+					player_infos.add(split_line);
+				}
+			} catch (IOException e) {
+				System.err.println("Couldn't read in the match file");
+				e.printStackTrace();
+			}
+			
+			MatchInfo m = new MatchInfo("GUIView", player_infos.get(0), player_infos.get(1));
 			Game game = new Game(m);
 			System.out.println(game.start());
 		} catch (IOException e) {

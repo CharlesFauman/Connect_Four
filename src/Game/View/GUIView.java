@@ -17,12 +17,15 @@ public class GUIView extends View{
 	private JFrame frame;
 	private JLabel connect_4_board;
 	private JLabel[][] pieces;
-	private JLabel notification;
 	private int player_turn;
+	private String first_player_name, second_player_name;
+	private JLabel notification;
 	
-	private int last_x, last_y;
-	
-	public GUIView(int width, int height, int connect_number) {
+	public GUIView(String first_player_name, String second_player_name, int width, int height, int connect_number) {
+		//set player names
+		this.first_player_name = first_player_name;
+		this.second_player_name = second_player_name;
+		
 		// set player turn
 		player_turn = 1;
 		
@@ -30,7 +33,7 @@ public class GUIView extends View{
 		frame = new JFrame("Connect 4");
 		
 		// Size the frame.
-		frame.setSize(920, 880);
+		frame.setSize(920, 920);
 
 		// What happens when the frame closes? End the application
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,9 +42,21 @@ public class GUIView extends View{
 		frame.setLayout(new FlowLayout());
 
 		// Create components and put them in the frame.
-		Border connect_4_border = BorderFactory.createLineBorder(Color.BLACK, 40);
+		JLabel first_name = new JLabel();
+		first_name.setText("Green: " + first_player_name);
+		first_name.setFont(first_name.getFont().deriveFont(25f));
+		first_name.setPreferredSize(new Dimension(460, 40));
+		frame.add(first_name);
 		
-		ImageIcon connect_4_board_image = new ImageIcon("connect_4_board.png");
+		JLabel second_name = new JLabel();
+		second_name.setText("Blue: " + second_player_name);
+		second_name.setFont(second_name.getFont().deriveFont(25f));
+		second_name.setPreferredSize(new Dimension(400, 40));
+		frame.add(second_name);
+		
+		
+		Border connect_4_border = BorderFactory.createLineBorder(Color.BLACK, 40);
+		ImageIcon connect_4_board_image = new ImageIcon("src/Game/Resources/connect_4_board.png");
 		connect_4_board = new JLabel(connect_4_board_image);
 		connect_4_board.setLayout(new GridLayout(height, width, 20, 20));
 		connect_4_board.setBorder(connect_4_border);
@@ -62,8 +77,8 @@ public class GUIView extends View{
 		frame.setVisible(true);
 	}
 	
-	public GUIView() {
-		this(7, 6, 4);
+	public GUIView(String first_player_name, String second_player_name) {
+		this(first_player_name, second_player_name, 7, 6, 4);
 	}
 
 	@Override
@@ -74,7 +89,7 @@ public class GUIView extends View{
 
 	@Override
 	public void NotifyIllegalMove(int column) {
-		notification.setText("Current player attempted an illegal move! ");
+		notification.setText("Current player attempted an illegal move (" + (column+1) + ")!");
 		NotifyWin();
 	}
 
@@ -99,17 +114,11 @@ public class GUIView extends View{
 	public void PlayMove(int column, int row) {
 		// find the piece image
 		ImageIcon piece_image;
-		if(player_turn == 1) piece_image = new ImageIcon("X_puck.png");
-		else piece_image = new ImageIcon("O_puck.png");
+		if(player_turn == 1) piece_image = new ImageIcon("src/Game/Resources/X_puck.png");
+		else piece_image = new ImageIcon("src/Game/Resources/O_puck.png");
 		
 		// set the piece icon to that image
 		pieces[column][row].setIcon(piece_image);
-		
-		//pieces[column][row].setBorder(new Border);
-		//pieces[last_x][last_y].setForeground(Color.CYAN);
-		
-		last_x = column;
-		last_y = row;
 
 		player_turn = -player_turn;
 	}

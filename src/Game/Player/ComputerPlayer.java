@@ -37,7 +37,7 @@ public class ComputerPlayer extends Player {
 		return ans;
 	}
 	
-	protected void Initiate(int player_num) throws IOException {
+	protected void Initiate(boolean first) throws IOException {
 		// This will be used to make sure this program is initiated in the right amount of time!
 				final ExecutorService service = Executors.newSingleThreadExecutor();
 				
@@ -49,8 +49,12 @@ public class ComputerPlayer extends Player {
 					final Future<Boolean> set_up = service.submit(() -> {
 						try {
 							if(ReadFromProgram() != 'p') throw new IOException("did not respond with p");
-							WriteToProgram(String.valueOf(player_num));
-							if(player_num == 2) if(ReadFromProgram() != '?') throw new IOException("did not respond with ?");
+							if(first) {
+								WriteToProgram("1");
+							}else {
+								WriteToProgram("2");
+								if(ReadFromProgram() != '?') throw new IOException("did not respond with ?");
+							}
 						} catch(IOException e){
 							e.printStackTrace();
 							return false;
@@ -91,5 +95,4 @@ public class ComputerPlayer extends Player {
 		WriteToProgram("-1");
 		program.destroy();
 	}
-	
 }

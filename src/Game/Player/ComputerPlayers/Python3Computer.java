@@ -11,7 +11,8 @@ import Game.Player.ComputerPlayer;
 
 public class Python3Computer extends ComputerPlayer{
 
-	public Python3Computer(String dir, String commandline_input, int player_num) throws IOException {
+	public Python3Computer(String name, String dir, String commandline_input, boolean player_num) throws IOException {
+		this.name = name;
 		File directory = new File(dir);
 		// initialize the main variables. If these initializations are invalid, and IOException will be thrown
 		program = Runtime.getRuntime().exec(commandline_input, null, directory);
