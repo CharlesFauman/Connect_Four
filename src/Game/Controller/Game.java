@@ -66,8 +66,8 @@ public class Game {
 					win = -move;
 					break;
 				} catch (InterruptedException e) {
-					System.err.println("Well, this wasn't supposed to happen!");
-					e.printStackTrace();
+					// will happen on service shutdown if program doesnt terminate itself
+					// System.err.print("Program did not terminate itself. But it's fine. ");
 				} catch (ExecutionException e) {
 					System.err.println("Well, this wasn't supposed to happen!");
 					e.printStackTrace();

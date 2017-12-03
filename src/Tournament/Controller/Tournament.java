@@ -6,6 +6,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import Game.Controller.*;
 
@@ -27,8 +33,52 @@ public class Tournament {
 			e.printStackTrace();
 		}
 		
+		
+		// eliminate the players that don't work:
+		Iterator<String[]> itr = player_infos.iterator();
+		while(itr.hasNext()) {
+			String[] first_player = itr.next().clone();
+			String[] second_player = first_player.clone();
+			
+			MatchInfo m = new MatchInfo("NoView", first_player, second_player);
+			Game game = new Game(m);
+			int winner = -2;
+			
+			System.out.print("Testing: " + first_player[0] + " ");
+			
+			final ExecutorService service = Executors.newSingleThreadExecutor();
+			
+			try {
+				final Future<Integer> check_goodness = service.submit(() -> {
+					return game.start();
+	            });
+				winner = check_goodness.get(2, TimeUnit.SECONDS);
+			} catch(final TimeoutException e){
+				// Means the game is running. This is fine
+				winner = 1;
+			} catch (Exception e) {
+				// this might happen on shutdown
+			}
+			if(winner != -2) {
+				players_left.add(first_player);
+				System.out.println("PASSED");
+			}
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				System.err.println("shouldn't break here...");
+				e.printStackTrace();
+			}
+			service.shutdownNow();
+		}
+		System.out.println("Starting Players: " + players_left.size());
+		player_infos = new ArrayList<String[]>(players_left);
+		players_left.clear();
+		
+		
+		// play out the tournament
 		while(player_infos.size() > 1) {
-			Iterator<String[]> itr = player_infos.iterator();
+			itr = player_infos.iterator();
 			while(itr.hasNext()) {
 				String[] first_player = itr.next().clone();
 				String[] second_player = {};
