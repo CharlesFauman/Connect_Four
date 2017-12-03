@@ -15,31 +15,45 @@ import Game.Player.*;
 import Game.Player.ComputerPlayers.*;
 
 
-public class Main {
+public class Game {
+	MatchInfo match_info;
+	
+	public Game(MatchInfo match_info) {
+		this.match_info = match_info;
+	}
+	
 	/**
 	 * this will run the connect 4 game
 	 * @throws IOException
 	 */
-	public static void GameThread() throws IOException {
+	public int start() throws IOException {
 		// This will be used to make sure external calls (to programs) run in the right amount of time!
 		final ExecutorService service = Executors.newSingleThreadExecutor();
 
-		
-		// initializing the model and view
+		// initializing the model
 		Model model = new Model();
-		View view = new GUIView();
 		
+		// using matches
+//		View view = match_info.GenerateView();
+//		Player first_player = match_info.GenerateFirstPlayer();
+//		Player second_player = match_info.GenerateSecondPlayer();
+				
+		//using old stuff
+		View view = new GUIView();
 		// DECLARE PLAYERS HERE
-//		Player first_player = new TextHumanPlayer();
+		
 		Player second_player = new TextHumanPlayer();
+		Player first_player = new TextHumanPlayer();
+//		Player second_player = new TextHumanPlayer();
 			
-		Player first_player = new WindowsExeComputer("/Users/faumac/Desktop/Connect_4_bot/", "Charlie.exe", 1);
+//		Player first_player = new WindowsExeComputer("/Users/faumac/Desktop/Connect_4_bot/", "Charlie.exe", 1);
 //		Player second_player = new WindowsExeComputer("/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/", "Lisheng.exe", 2);
 		
 //		Player first_player = new Python3Computer("/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/", "python Sinclair.py", 1);
 //		Player second_player = new Python3Computer("/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/", "python Ben.py", 2);
 				
 		// play the game. Set move to first player
+		int win = -2;
 		int move = 1;
 		try {
 			// each loop will get 1 move
@@ -56,6 +70,7 @@ public class Main {
 					column = move_getter.get(10, TimeUnit.SECONDS);
 				} catch(final TimeoutException e){
 					view.NotifyTimeout();
+					win = -move;
 					break;
 				} catch (InterruptedException e) {
 					System.err.println("Well, this wasn't supposed to happen!");
@@ -68,6 +83,7 @@ public class Main {
 				// make sure the move is legal! If it isn't, then let the view know and end the game
 				if(!model.isLegalMove(column)) {
 					view.NotifyIllegalMove(column);
+					win = -move;
 					break;
 				}
 				
@@ -84,12 +100,14 @@ public class Main {
 				// check if the game is a draw, and if so notify the view and end the game
 				if(model.isDrawn()) {
 					view.NotifyDrawn();
+					win = 0;
 					break;
 				}
 				
 				// check if the game is a won, and if so notify the view and end the game
 				if(model.isWon()) {
 					view.NotifyWin();
+					win = move;
 					break;
 				}
 				
@@ -98,17 +116,24 @@ public class Main {
 			}
 		} catch(IOException e) {
 			// this will occur if the player gives us weird input or if we can't give them input for some reason
+			win = move;
 			view.NotifyIOException();
 		}
 		
 		first_player.NotifyGameOver();
 		second_player.NotifyGameOver();
+		
+		
+		return win;
 	}
 
 	public static void main(String[] args) {
 		// this is where we start. Attempt to start the game
 		try {
-			GameThread();
+			
+			MatchInfo m = new MatchInfo("GUIView", new String[]{"TextHumanPlayer"}, new String[]{"TextHumanPlayer"});
+			Game game = new Game(m);
+			System.out.println(game.start());
 		} catch (IOException e) {
 			System.err.println("A player did not load correctly!");
 			e.printStackTrace();
