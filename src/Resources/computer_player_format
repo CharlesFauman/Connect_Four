@@ -1,0 +1,7 @@
+"program_type", "directory", "command"
+
+program_type: "WindowsExe" or "Python3"
+
+directory: "C:/..."
+
+command: "windows_exe.exe" or "python python3_file.py"
