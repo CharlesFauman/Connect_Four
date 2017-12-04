@@ -1,7 +1,7 @@
-Brandon,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/, python Brandon.py
-Carter,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/, python Carter.py
+Brandon,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Brandon.py
+Carter,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Carter.py
 Charlie,WindowsExeComputer,/Users/faumac/Desktop/Connect_4_bot/,Charlie.exe
-Justin,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/, python Justin.py
-Logan,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/, python Logan.py
-Ben,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/, python Ben.py
+Justin,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Justin.py
+Logan,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Logan.py
+Ben,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Ben.py
 Lisheng,WindowsExeComputer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Lisheng.exe

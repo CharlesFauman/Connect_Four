@@ -89,7 +89,7 @@ public class GUIView extends View{
 
 	@Override
 	public void NotifyIllegalMove(int column) {
-		notification.setText("Current player attempted an illegal move (" + (column+1) + ")!");
+		notification.setText("attempt at an illegal move (" + (column+1) + ")!");
 		NotifyWin();
 	}
 
@@ -101,10 +101,10 @@ public class GUIView extends View{
 	@Override
 	public void NotifyWin() {
 		String txt = notification.getText();
-		txt += " That's a win for player ";
+		txt += " That's a win for ";
 		switch(-player_turn) {
-		case 1: txt += "Green"; break;
-		case -1: txt +="Blue"; break;
+		case 1: txt += "Green, " + first_player_name; break;
+		case -1: txt +="Blue, " + second_player_name; break;
 		}
 		txt += "!";
 		notification.setText(txt);

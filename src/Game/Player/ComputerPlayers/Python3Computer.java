@@ -15,7 +15,7 @@ public class Python3Computer extends ComputerPlayer{
 		this.name = name;
 		File directory = new File(dir);
 		// initialize the main variables. If these initializations are invalid, and IOException will be thrown
-		program = Runtime.getRuntime().exec(commandline_input, null, directory);
+		program = Runtime.getRuntime().exec("python " + commandline_input, null, directory);
 		reader_from_program = new BufferedReader(new InputStreamReader(program.getInputStream()));
 		writer_to_program = new BufferedWriter(new OutputStreamWriter(program.getOutputStream()));
 		

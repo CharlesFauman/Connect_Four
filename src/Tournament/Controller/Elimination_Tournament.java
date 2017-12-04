@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +17,7 @@ import java.util.concurrent.TimeoutException;
 
 import Game.Controller.*;
 
-public class Tournament {
+public class Elimination_Tournament {
 
 	public static void main(String[] args){
 		List<String[]> player_infos = new ArrayList<String[]>();
@@ -79,6 +80,7 @@ public class Tournament {
 		
 		// play out the tournament
 		while(player_infos.size() > 1) {
+			Collections.shuffle(player_infos);
 			itr = player_infos.iterator();
 			while(itr.hasNext()) {
 				String[] first_player = itr.next().clone();
