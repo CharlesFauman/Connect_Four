@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -52,7 +53,7 @@ public class Tournament {
 				final Future<Integer> check_goodness = service.submit(() -> {
 					return game.start();
 	            });
-				winner = check_goodness.get(2, TimeUnit.SECONDS);
+				winner = check_goodness.get(200, TimeUnit.MILLISECONDS);
 			} catch(final TimeoutException e){
 				// Means the game is running. This is fine
 				winner = 1;
@@ -64,7 +65,7 @@ public class Tournament {
 				System.out.println("PASSED");
 			}
 			try {
-				TimeUnit.SECONDS.sleep(1);
+				TimeUnit.MILLISECONDS.sleep(100);
 			} catch (InterruptedException e) {
 				System.err.println("shouldn't break here...");
 				e.printStackTrace();
@@ -84,19 +85,24 @@ public class Tournament {
 				String[] second_player = {};
 				if(itr.hasNext()) second_player = itr.next().clone();
 				else {
-					System.out.println("Moves on: " + first_player[0]);
+					System.out.println("Has no opponent and moves on: " + first_player[0]);
 					players_left.add(first_player);
 					break;
 				}
 				MatchInfo m = new MatchInfo("GUIView", first_player, second_player);
 				Game game = new Game(m);
 				int winner = -2;
+				System.out.println("Now playing: " + first_player[0] + " vs. " + second_player[0]);			
+				final ExecutorService service = Executors.newSingleThreadExecutor();
 				try {
-					System.out.println("Now playing: " + first_player[0] + " vs. " + second_player[0]);
-					winner = game.start();
-				} catch (IOException e) {
-					System.out.println("One of the programs did not load correctly");
+					final Future<Integer> check_goodness = service.submit(() -> {
+						return game.start();
+		            });
+					winner = check_goodness.get();
+				} catch (Exception e) {
+					System.out.println("One of the programs did not load correctly in the game");
 				}
+				service.shutdownNow();
 				
 				if(winner == 1) {
 					players_left.add(first_player);
@@ -115,6 +121,12 @@ public class Tournament {
 		System.out.println("We have a winner!");
 		System.out.println(player_infos.get(0)[0]);
 		
+		System.out.println("Press Enter to end game:");
+		Scanner reader = new Scanner(System.in);
+		reader.nextLine();
+		reader.close();
+		
+		System.exit(0);
 	}
 
 }

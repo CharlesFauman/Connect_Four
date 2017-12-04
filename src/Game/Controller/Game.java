@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException; 	// if an IO process doesn't execute correctly, throw an error
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 // to make sure external calls happen fast enough
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -138,7 +139,12 @@ public class Game {
 			
 			MatchInfo m = new MatchInfo("GUIView", player_infos.get(0), player_infos.get(1));
 			Game game = new Game(m);
-			System.out.println(game.start());
+			int winner = game.start();
+			System.out.println("Press Enter to end game:");
+			Scanner reader = new Scanner(System.in);
+			reader.nextLine();
+			reader.close();
+			System.exit(0);
 		} catch (IOException e) {
 			System.err.println("A player did not load correctly!");
 			e.printStackTrace();

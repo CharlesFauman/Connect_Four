@@ -36,7 +36,7 @@ public class GUIView extends View{
 		frame.setSize(920, 920);
 
 		// What happens when the frame closes? End the application
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		// let the components arrange by themselves where they should go
 		frame.setLayout(new FlowLayout());
