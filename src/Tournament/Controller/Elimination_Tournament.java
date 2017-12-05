@@ -54,16 +54,19 @@ public class Elimination_Tournament {
 				final Future<Integer> check_goodness = service.submit(() -> {
 					return game.start();
 	            });
-				winner = check_goodness.get(200, TimeUnit.MILLISECONDS);
+				winner = check_goodness.get(2000, TimeUnit.MILLISECONDS);
 			} catch(final TimeoutException e){
 				// Means the game is running. This is fine
 				winner = 1;
 			} catch (Exception e) {
-				// this might happen on shutdown
+				// Means the game handled something weirdly, not fine
+				e.printStackTrace();
 			}
 			if(winner != -2) {
 				players_left.add(first_player);
 				System.out.println("PASSED");
+			}else {
+				System.out.println("FAILED");
 			}
 			try {
 				TimeUnit.MILLISECONDS.sleep(100);

@@ -1,2 +1,2 @@
+WikiHow,Python3Computer,/Users/faumac/Downloads/,wikihot_bot_v2.py
 You!,TextHumanPlayer
-Charlie,WindowsExeComputer,/Users/faumac/Desktop/Connect_4_bot/,Charlie.exe

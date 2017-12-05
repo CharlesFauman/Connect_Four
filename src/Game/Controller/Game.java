@@ -114,8 +114,8 @@ public class Game {
 			view.NotifyIOException();
 		}
 		
-		first_player.NotifyGameOver();
-		second_player.NotifyGameOver();
+		//first_player.NotifyGameOver();
+		//second_player.NotifyGameOver();
 		
 		
 		return win;
@@ -148,6 +148,10 @@ public class Game {
 		} catch (IOException e) {
 			System.err.println("A player did not load correctly!");
 			e.printStackTrace();
+			System.out.println("Press Enter to end game:");
+			Scanner reader = new Scanner(System.in);
+			reader.nextLine();
+			reader.close();
 			System.exit(0);
 		}
 		
