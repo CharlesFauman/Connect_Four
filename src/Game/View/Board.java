@@ -41,11 +41,12 @@ public class Board extends JPanel{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(connect_4_board_image, 40, 40, null);
-		Iterator<Piece> itr = pieces.iterator();
+		ArrayList<Piece> copy_of_pieces = new ArrayList<Piece>(pieces); // to prevent concurrency errors
+		Iterator<Piece> itr = copy_of_pieces.iterator();
 		int ply_num = 0;
 		while(itr.hasNext()) {
 			++ply_num;
-			if(ply_num > pieces.size()-offset) break;
+			if(ply_num > copy_of_pieces.size()-offset) break;
 			Piece piece = itr.next();
 			if(piece.player == 1) {
 				g.drawImage(X_puck_image, 40 + 120*(piece.x), 40 + 120*(5-piece.y), null);

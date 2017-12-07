@@ -1,2 +1,2 @@
-Charlie,WindowsExeComputer,/Users/faumac/eclipse-workspace/Connect_Four/Programs/,Charlie.exe
 Paul,Python3Computer,/Users/faumac/eclipse-workspace/Connect_Four/Programs/,Paul.py
+Charlie,WindowsExeComputer,/Users/faumac/eclipse-workspace/Connect_Four/Programs/,Charlie.exe

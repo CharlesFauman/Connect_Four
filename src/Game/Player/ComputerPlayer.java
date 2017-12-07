@@ -61,7 +61,7 @@ public class ComputerPlayer extends Player {
 						}
 						return true;
 		            });
-					if(!set_up.get(2, TimeUnit.SECONDS)) throw new IOException();
+					if(!set_up.get(2, TimeUnit.SECONDS)) throw new IOException("Did not handle IO appropriately");
 				} catch(final TimeoutException e){
 					throw new IOException("did not respond to initial requests in time");
 				} catch (InterruptedException e) {

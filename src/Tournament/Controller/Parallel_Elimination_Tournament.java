@@ -17,11 +17,10 @@ import java.util.concurrent.TimeoutException;
 
 import Game.Controller.*;
 
-public class Procedural_Elimination_Tournament {
+public class Parallel_Elimination_Tournament {
 
-	public static void main(String[] args){
-		List<String[]> player_infos = new ArrayList<String[]>();
-		
+	public static void main(String[] args){List<String[]> player_infos = new ArrayList<String[]>();
+	
 		List<String[]> players_left = new ArrayList<String[]>();
 		
 		try(BufferedReader tournament_reader = new BufferedReader( new FileReader("src/Tournament/Resources/tournament_info.txt"));){
@@ -85,6 +84,9 @@ public class Procedural_Elimination_Tournament {
 		while(player_infos.size() > 1) {
 			Collections.shuffle(player_infos);
 			itr = player_infos.iterator();
+			ExecutorService service = Executors.newFixedThreadPool(player_infos.size());
+			List<Future<String[]>> ongoing_games = new ArrayList<Future<String[]>>();
+			// submit games
 			while(itr.hasNext()) {
 				String[] first_player = itr.next().clone();
 				String[] second_player = {};
@@ -96,26 +98,49 @@ public class Procedural_Elimination_Tournament {
 				}
 				MatchInfo m = new MatchInfo("GUIView", first_player, second_player);
 				Game game = new Game(m);
-				String[] winner = null;
-				System.out.println("Now playing: " + first_player[0] + " vs. " + second_player[0]);			
-				final ExecutorService service = Executors.newSingleThreadExecutor();
+
+				System.out.println("New game started! " + first_player[0] + " vs. " + second_player[0]);
+				final Future<String[]> check_goodness = service.submit(() -> {
+					return game.start();
+	            });
+				ongoing_games.add(check_goodness);
+			}
+			
+			// check games
+			while(ongoing_games.size() > 0) {
 				try {
-					final Future<String[]> check_goodness = service.submit(() -> {
-						return game.start();
-		            });
-					winner = check_goodness.get();
-				} catch (Exception e) {
-					System.out.println("One of the programs did not load correctly in the game");
+					TimeUnit.SECONDS.sleep(2);
+				} catch (InterruptedException e) {
+					System.err.println("shouldn't break here...");
+					e.printStackTrace();
 				}
-				service.shutdownNow();
-				
-				if(winner != null) {
-					players_left.add(winner);
-					System.out.println("Moves on: " + first_player[0]);
-				}else {
-					System.err.println("Hmm this isn't right");
+				Iterator<Future<String[]>> current_game_itr = ongoing_games.iterator();
+				while(current_game_itr.hasNext()) {
+					Future<String[]> current_game = current_game_itr.next();
+					if(current_game.isDone()) {
+						String[] current_winner = null;
+						try {
+							current_winner = current_game.get();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (ExecutionException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						if(current_winner != null) {
+							players_left.add(current_winner);
+							System.out.println("Moves on: " + current_winner[0]);
+						}else {
+							System.err.println("Hmm this isn't right");
+						}
+						
+						current_game_itr.remove();
+					}
 				}
 			}
+			
 			System.out.println("Players left: " + players_left.size());
 			player_infos = new ArrayList<String[]>(players_left);
 			players_left.clear();
@@ -130,5 +155,4 @@ public class Procedural_Elimination_Tournament {
 		
 		System.exit(0);
 	}
-
 }

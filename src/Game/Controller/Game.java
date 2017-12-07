@@ -31,7 +31,7 @@ public class Game {
 	 * this will run the connect 4 game
 	 * @throws IOException
 	 */
-	public int start() throws IOException {
+	public String[] start() throws IOException {
 		// This will be used to make sure external calls (to programs) run in the right amount of time!
 		final ExecutorService service = Executors.newSingleThreadExecutor();
 
@@ -117,8 +117,9 @@ public class Game {
 		//first_player.NotifyGameOver();
 		//second_player.NotifyGameOver();
 		
-		
-		return win;
+		if(win == 1) return match_info.first_player_info;
+		else if(win == 0 || win == -1) return match_info.second_player_info;
+		else return null;
 	}
 
 	public static void main(String[] args) {
@@ -139,7 +140,7 @@ public class Game {
 			
 			MatchInfo m = new MatchInfo("GUIView", player_infos.get(0), player_infos.get(1));
 			Game game = new Game(m);
-			int winner = game.start();
+			String[] winner = game.start();
 			System.out.println("Press Enter to end game:");
 			Scanner reader = new Scanner(System.in);
 			reader.nextLine();
