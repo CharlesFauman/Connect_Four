@@ -44,20 +44,20 @@ public class Procedural_Elimination_Tournament {
 			
 			MatchInfo m = new MatchInfo("NoView", first_player, second_player);
 			Game game = new Game(m);
-			String[] winner = null;
+			Integer winner = null;
 			
 			System.out.print("Testing: " + first_player[0] + " ");
 			
 			final ExecutorService service = Executors.newSingleThreadExecutor();
 			
 			try {
-				final Future<String[]> check_goodness = service.submit(() -> {
+				final Future<Integer> check_goodness = service.submit(() -> {
 					return game.start();
 	            });
 				winner = check_goodness.get(2000, TimeUnit.MILLISECONDS);
 			} catch(final TimeoutException e){
 				// Means the game is running. This is fine
-				winner = first_player;
+				winner = 1;
 			} catch (Exception e) {
 				// Means the game handled something weirdly, not fine
 				e.printStackTrace();
@@ -96,11 +96,11 @@ public class Procedural_Elimination_Tournament {
 				}
 				MatchInfo m = new MatchInfo("GUIView", first_player, second_player);
 				Game game = new Game(m);
-				String[] winner = null;
+				Integer winner = null;
 				System.out.println("Now playing: " + first_player[0] + " vs. " + second_player[0]);			
 				final ExecutorService service = Executors.newSingleThreadExecutor();
 				try {
-					final Future<String[]> check_goodness = service.submit(() -> {
+					final Future<Integer> check_goodness = service.submit(() -> {
 						return game.start();
 		            });
 					winner = check_goodness.get();
@@ -109,9 +109,14 @@ public class Procedural_Elimination_Tournament {
 				}
 				service.shutdownNow();
 				
-				if(winner != null) {
-					players_left.add(winner);
-					System.out.println("Moves on: " + first_player[0]);
+				if(winner != -2) {
+					if(winner == 1) {
+						players_left.add(first_player);
+						System.out.println("Moves on: " + first_player[0]);
+					}else{
+						players_left.add(second_player);
+						System.out.println("Moves on: " + second_player[0]);
+					}
 				}else {
 					System.err.println("Hmm this isn't right");
 				}

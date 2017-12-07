@@ -31,7 +31,7 @@ public class Game {
 	 * this will run the connect 4 game
 	 * @throws IOException
 	 */
-	public String[] start() throws IOException {
+	public int start() throws IOException {
 		// This will be used to make sure external calls (to programs) run in the right amount of time!
 		final ExecutorService service = Executors.newSingleThreadExecutor();
 
@@ -117,44 +117,30 @@ public class Game {
 		//first_player.NotifyGameOver();
 		//second_player.NotifyGameOver();
 		
-		if(win == 1) return match_info.first_player_info;
-		else if(win == 0 || win == -1) return match_info.second_player_info;
-		else return null;
+		return win;
 	}
 
 	public static void main(String[] args) {
-		// this is where we start. Attempt to start the game
-		try {
-			List<String[]> player_infos = new ArrayList<String[]>();
-			
-			try(BufferedReader tournament_reader = new BufferedReader( new FileReader("src/Game/Resources/match_info.txt"));){
-				String line;
-				while((line = tournament_reader.readLine()) != null) {
-					String[] split_line = line.split(",");
-					player_infos.add(split_line);
-				}
-			} catch (IOException e) {
-				System.err.println("Couldn't read in the match file");
-				e.printStackTrace();
+		List<String[]> player_infos = new ArrayList<String[]>();
+		
+		try(BufferedReader tournament_reader = new BufferedReader( new FileReader("src/Game/Resources/match_info.txt"));){
+			String line;
+			while((line = tournament_reader.readLine()) != null) {
+				String[] split_line = line.split(",");
+				player_infos.add(split_line);
 			}
-			
-			MatchInfo m = new MatchInfo("GUIView", player_infos.get(0), player_infos.get(1));
-			Game game = new Game(m);
-			String[] winner = game.start();
-			System.out.println("Press Enter to end game:");
-			Scanner reader = new Scanner(System.in);
-			reader.nextLine();
-			reader.close();
-			System.exit(0);
 		} catch (IOException e) {
-			System.err.println("A player did not load correctly!");
+			System.err.println("Couldn't read in the match file");
 			e.printStackTrace();
-			System.out.println("Press Enter to end game:");
-			Scanner reader = new Scanner(System.in);
-			reader.nextLine();
-			reader.close();
-			System.exit(0);
 		}
+		
+		MatchInfo m = new MatchInfo("GUIView", player_infos.get(0), player_infos.get(1));
+		Game game = new Game(m);
+		System.out.println("Press Enter to end game:");
+		Scanner reader = new Scanner(System.in);
+		reader.nextLine();
+		reader.close();
+		System.exit(0);
 		
 		// now the game is done, exit system so it will shut off the external calls we made with as little hastle
 		// for us as possible. Note that, in general, this is not good coding practice,

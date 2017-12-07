@@ -19,8 +19,8 @@ import Game.Controller.*;
 
 public class Parallel_Elimination_Tournament {
 
-	public static void main(String[] args){List<String[]> player_infos = new ArrayList<String[]>();
-	
+	public static void main(String[] args){
+		List<String[]> player_infos = new ArrayList<String[]>();
 		List<String[]> players_left = new ArrayList<String[]>();
 		
 		try(BufferedReader tournament_reader = new BufferedReader( new FileReader("src/Tournament/Resources/tournament_info.txt"));){
@@ -43,20 +43,20 @@ public class Parallel_Elimination_Tournament {
 			
 			MatchInfo m = new MatchInfo("NoView", first_player, second_player);
 			Game game = new Game(m);
-			String[] winner = null;
+			Integer winner = null;
 			
 			System.out.print("Testing: " + first_player[0] + " ");
 			
 			final ExecutorService service = Executors.newSingleThreadExecutor();
 			
 			try {
-				final Future<String[]> check_goodness = service.submit(() -> {
+				final Future<Integer> check_goodness = service.submit(() -> {
 					return game.start();
 	            });
 				winner = check_goodness.get(2000, TimeUnit.MILLISECONDS);
 			} catch(final TimeoutException e){
 				// Means the game is running. This is fine
-				winner = first_player;
+				winner = 1;
 			} catch (Exception e) {
 				// Means the game handled something weirdly, not fine
 				e.printStackTrace();
@@ -85,11 +85,11 @@ public class Parallel_Elimination_Tournament {
 			Collections.shuffle(player_infos);
 			itr = player_infos.iterator();
 			ExecutorService service = Executors.newFixedThreadPool(player_infos.size());
-			List<Future<String[]>> ongoing_games = new ArrayList<Future<String[]>>();
+			List<Future<Integer>> ongoing_games = new ArrayList<Future<Integer>>();
 			// submit games
 			while(itr.hasNext()) {
 				String[] first_player = itr.next().clone();
-				String[] second_player = {};
+				String[] second_player;
 				if(itr.hasNext()) second_player = itr.next().clone();
 				else {
 					System.out.println("Has no opponent and moves on: " + first_player[0]);
@@ -100,8 +100,20 @@ public class Parallel_Elimination_Tournament {
 				Game game = new Game(m);
 
 				System.out.println("New game started! " + first_player[0] + " vs. " + second_player[0]);
-				final Future<String[]> check_goodness = service.submit(() -> {
-					return game.start();
+				final Future<Integer> check_goodness = service.submit(() -> {
+					Integer current_winner = game.start();
+					if(current_winner != -2) {
+						if(current_winner == 1) {
+							players_left.add(first_player);
+							System.out.println("Moves on: " + first_player[0]);
+						}else {
+							players_left.add(second_player);
+							System.out.println("Moves on: " + second_player[0]);
+						}
+					}else {
+						System.err.println("Hmm this isn't right");
+					}
+					return current_winner;
 	            });
 				ongoing_games.add(check_goodness);
 			}
@@ -114,11 +126,11 @@ public class Parallel_Elimination_Tournament {
 					System.err.println("shouldn't break here...");
 					e.printStackTrace();
 				}
-				Iterator<Future<String[]>> current_game_itr = ongoing_games.iterator();
+				Iterator<Future<Integer>> current_game_itr = ongoing_games.iterator();
 				while(current_game_itr.hasNext()) {
-					Future<String[]> current_game = current_game_itr.next();
+					Future<Integer> current_game = current_game_itr.next();
 					if(current_game.isDone()) {
-						String[] current_winner = null;
+						Integer current_winner = null;
 						try {
 							current_winner = current_game.get();
 						} catch (InterruptedException e) {
@@ -129,12 +141,6 @@ public class Parallel_Elimination_Tournament {
 							e.printStackTrace();
 						}
 						
-						if(current_winner != null) {
-							players_left.add(current_winner);
-							System.out.println("Moves on: " + current_winner[0]);
-						}else {
-							System.err.println("Hmm this isn't right");
-						}
 						
 						current_game_itr.remove();
 					}

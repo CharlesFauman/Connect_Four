@@ -98,21 +98,23 @@ def compute(p, o, m, b):
 	for c in range(7):
 		r = via_r(c, b)
 		if r != 9:		
-			m[c] += h_streak(p, r, c, b) * v[c]
+			m[c] += h_streak(p, r, c, b) * v[c] * 1.5
 			m[c] += h_streak(o, r, c, b)
 			
-			m[c] += v_streak(p, r, c, b) * v[c]
-			m[c] += v_streak(o, r, c, b)	
+			m[c] += v_streak(p, r, c, b) * v[c] *1.5
+			m[c] += v_streak(o, r, c, b) * 1.5
 		
-			m[c] += d_streak(p, r, c, b) * v[c]
-			m[c] += d_streak(o, r, c, b)
+			m[c] += d_streak(p, r, c, b) * v[c] * 1.5
+			m[c] += d_streak(o, r, c, b) * 1.5
 		
-			m[c] += dn_streak(p, r, c, b) * v[c]
-			m[c] += dn_streak(o, r, c, b)
+			m[c] += dn_streak(p, r, c, b) * v[c] * 1.5
+			m[c] += dn_streak(o, r, c, b) * 1.5
 	return m
 		
 def winning(p, c, b):
 	r =  via_r(c,b)
+	if r == 9:
+		return False
 	if h_streak(p, r, c, b) == 4:
 		return True
 	if v_streak(p, r, c, b) == 4:
@@ -129,18 +131,18 @@ def bestie(m):
 		if m[c] > m[b]:
 			b = c
 	return b
-			
+
 def do_it(p, o, b):
-	for c in range(7):
-		if winning(p, c, b):
-			return c+1
-	for c in range(7):
-		if winning(o, c, b):
-			return c+1
-		
 	m0 = [0,0,0,0,0,0,0]
 	tb0 = copy.deepcopy(b)
 	m0 = compute(p, o, m0, tb0)
+	
+	for c in range(7):
+		if winning(p, c, b):
+			m0[c] += 20
+	for c in range(7):
+		if winning(o, c, b):
+			m0[c] += 19
 		
 	for c1 in range(7):
 		if via_r(c1, tb0) != 9:
@@ -148,13 +150,31 @@ def do_it(p, o, b):
 			tb1 = update_board(p, c1+1, tb1)
 			
 			m1 = [0,0,0,0,0,0,0]
+			
 			for c1o in range(7):
 				if via_r(c1o, tb1) != 9:
 					tb1o = copy.deepcopy(tb1)
 					tb1o = update_board(o, c1o+1, tb1o)
 					
 					m1 = compute(p, o, m1, tb1o)
-					m0[c1] += sum(m1)/74
+					
+					for c2 in range(7):
+						if via_r(c2, tb1o) != 9:
+							tb2 = copy.deepcopy(tb1o)
+							tb2 = update_board(p, c1+1, tb2)
+							
+							m2 = [0,0,0,0,0,0,0]
+							
+							for c2o in range(7):
+								if via_r(c2, tb2) != 9:
+									tb2o = copy.deepcopy(tb1)
+									tb2o = update_board(o, c2o+1, tb2o)
+									
+									m2 = compute(p, o, m2, tb2o)
+									
+									m1[c2] += sum(m2)/144
+					m0[c1] += sum(m1)/(144)			
+
 		
 	return bestie(m0)+1
 
@@ -190,6 +210,5 @@ while game:
 	print(do_it(you, bad_guy, b0))
 	b0 = update_board(you, do_it(you, bad_guy, b0), b0)
 	game = check_board(you, b0)
-	
 	
 	sys.stdout.flush()
