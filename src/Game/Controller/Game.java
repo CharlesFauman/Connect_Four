@@ -61,7 +61,7 @@ public class Game {
 						if(curr_move == 1) return first_player.GetMove();
 						else return second_player.GetMove();
 		            });
-					column = move_getter.get(10, TimeUnit.SECONDS);
+					column = move_getter.get(15, TimeUnit.SECONDS);
 				} catch(final TimeoutException e){
 					view.NotifyTimeout();
 					win = -move;

@@ -17,7 +17,7 @@ import java.util.concurrent.TimeoutException;
 
 import Game.Controller.*;
 
-public class Elimination_Tournament {
+public class Procedural_Elimination_Tournament {
 
 	public static void main(String[] args){
 		List<String[]> player_infos = new ArrayList<String[]>();

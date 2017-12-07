@@ -1,20 +1,4 @@
-WikiHow,Python3Computer,/Users/faumac/Downloads/,wikihot_bot_v2.py
-Charlie,WindowsExeComputer,/Users/faumac/Downloads/Connect4 AIs/,Charlie.exe
-Brandon,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Brandon.py
-Carter,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Carter.py
-Justin,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Justin.py
-Logan,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Logan.py
-Ben,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Ben.py
-Asad,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Asad.py
-Max,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Max.py
-Parker,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Parker.py
-Rachel,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Rachel.py
-Sam,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Sam.py
-Sinclair,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Sinclair.py
-Vibhav,Python3Computer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Vibhav.py
-Lisheng,WindowsExeComputer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Lisheng.exe
-Colin,WindowsExeComputer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Colin.exe
-JeanClaude,WindowsExeComputer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,JeanClaude.exe
-lucien,WindowsExeComputer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,lucien.exe
-Max,WindowsExeComputer,/Users/faumac/Desktop/Connect_4_bot/Connect-4 Programs/AIsFromPastYears/2015/,Max.exe
-Charlie,WindowsExeComputer,/Users/faumac/Desktop/Connect_4_bot/,Charlie.exe
+Kathrine,Python3Computer,/Users/faumac/eclipse-workspace/Connect_Four/Programs/,Kathrine.py
+Charlie,WindowsExeComputer,/Users/faumac/eclipse-workspace/Connect_Four/Programs/,Charlie.exe
+Jack,Python3Computer,/Users/faumac/eclipse-workspace/Connect_Four/Programs/,Jack.py
+Paul,Python3Computer,/Users/faumac/eclipse-workspace/Connect_Four/Programs/,Paul.py
