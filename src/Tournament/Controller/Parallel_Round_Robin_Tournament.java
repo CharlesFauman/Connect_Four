@@ -51,9 +51,6 @@ public class Parallel_Round_Robin_Tournament {
 			int num_rounds = player_infos.size()-1;
 			for(int current_round = 0; current_round < num_rounds; ++current_round) {
 				System.out.println(" --- Current Traversal: " + (starting_right_first+1) + " / Current Round:" + (current_round+1) + "  ---");
-				// create a service thread for the round:
-				ExecutorService service = Executors.newFixedThreadPool(player_infos.size());
-				List<Future<Integer>> ongoing_games = new ArrayList<Future<Integer>>();
 				
 				// split list of players in half to left and right
 				int midpoint = Math.floorDiv(player_infos.size(), 2);
@@ -69,7 +66,10 @@ public class Parallel_Round_Robin_Tournament {
 					assert(left.size() + right.size() == player_infos.size());
 				}
 				
-				// TODO: below
+				// create a service thread for the round:
+				ExecutorService service = Executors.newFixedThreadPool(midpoint);
+				List<Future<Integer>> ongoing_games = new ArrayList<Future<Integer>>();
+				
 				// Match up the players
 				boolean reversed = (starting_right_first == 0 && current_round%2 == 0 ) || (starting_right_first == 1 && current_round%2 == 1);
 				for(int current_match = 0; current_match < midpoint; ++current_match) {
@@ -130,6 +130,7 @@ public class Parallel_Round_Robin_Tournament {
 				Player moving_player = player_infos.removeLast();
 				player_infos.add(1, moving_player);
 				System.out.println();
+				service.shutdownNow();
 			}
 			System.out.println();
 		}

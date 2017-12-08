@@ -176,12 +176,12 @@ if __name__ == "__main__":
         for move in good:
             counts[int(move[0])] += (7 - len(move))**3
         for move in bad:
-            counts[int(move[0])] -= ((7 - len(move))**3)/1.5
+            counts[int(move[0])] -= ((7 - len(move))**3)
         if not max(counts) == 0:
             us_move = counts.index(max(counts)) + 1
         else:
             counts.remove(0)
-            us_move = counts.index(max(counts))
+            us_move = counts.index(max(counts)) + 1
         b.add(us_move,us,True)
         print(us_move)
         if not b.game_over:

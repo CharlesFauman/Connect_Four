@@ -1,12 +1,12 @@
-import Paul_functions as functions  
+import Paul_functions as functions   
 import sys
+import copy
 x = 1
 print ("p")  
 sys.stdout.flush()
 
 board = [[0]*6 for i in range(7)]
-for j in range(7):
-    board[j][5] = 0
+#functions.printer(board)
 r = int(input())
 if (r == 1):
     AI = 1
@@ -20,62 +20,58 @@ elif (r == 2):
     print ("?")
     sys.stdout.flush()
 
-#functions.printer(board)
 while(x):
-    pos = int(input()) - 1
-    z = functions.placepiece1(pos,board,you)
+    pos = int(input())
+    if (pos == -1 or pos == -2 or pos == -3):
+        break
+    z = functions.placepiece1(pos - 1,board,you)
     if (z == -1):
-        #print("heeeeeeeeeeer")
         break
     z = functions.checkwin(board)
     #functions.printer(board)
     if(z > 0):
-        #print("skinny penis")
         break
-    #print(board)
     elif(z < 0):
         pass
     elif(z == 0):
-        #print("asshole")
         break
-    #print(board)
     y = functions.placewin(board,AI)
     if(y > 0):
         functions.placepiece1(y,board,AI)
-        #print("your dumb")
-        #print("y",y)
         print (y+1)
         sys.stdout.flush()
         break
-    #print("here")
     sims = functions.run_sims(board,AI,you)
     if(sims == -1):
-        #print("ahaha")
         #functions.printer(board)
         continue
-    #print("aaaa")
-    y = functions.placepiece1(sims,board,AI)
-    #print("why neg 1")
-    #print("y", y)
-    print (y+1)
-    sys.stdout.flush()
-    if (y == -1):
-        #print("here")
-        #print(y)
-        break
-    if (functions.checkwin(board) > 0):
-        #print("fuckoff")
-        break
-    elif(functions.checkwin(board) == 0):
-        #print("suck the d")
-        break
-    elif(functions.checkwin(board) < 0):
-        pass
+    elif(sims == None):
+        for i in range(7):
+            cop = copy.deepcopy(board)
+            y = functions.placepiece1(i,cop,AI)
+            if(y == -1):
+                continue
+            else:
+                board = cop
+                print(y+1)
+                break
+            if(functions.checkwin(board) > 0):
+                break
+            #functions.printer(board)
+    elif(sims >= 0):
+        y = functions.placepiece1(sims,board,AI)
+        print (y+1)
+        sys.stdout.flush()
+        if (y == -1):
+            break
+        if (functions.checkwin(board) > 0):
+            break
+        elif(functions.checkwin(board) == 0):
+            break
+        elif(functions.checkwin(board) < 0):
+            pass
     #print("")
     #functions.printer(board)
-#print("")
-#functions.printer(board)
-#print("PINGUS")
 
 
 

@@ -38,6 +38,7 @@ public class Procedural_Elimination_Tournament {
 		
 		// eliminate the players that don't work:
 		Iterator<String[]> itr = player_infos.iterator();
+		/*
 		while(itr.hasNext()) {
 			String[] first_player = itr.next().clone();
 			String[] second_player = first_player.clone();
@@ -79,6 +80,7 @@ public class Procedural_Elimination_Tournament {
 		System.out.println("Starting Players: " + players_left.size());
 		player_infos = new ArrayList<String[]>(players_left);
 		players_left.clear();
+		*/
 		
 		
 		// play out the tournament

@@ -170,6 +170,10 @@ def run_sims(board,AI,you):
            sec = secondsmallest(winnumyou)
            index_min = winnumyou.index(sec)
            #print(sec)
+    elif(mx == mn and mx == 0):
+        index_min = None
+    elif(mx == mn and mx > 0):
+        index_min = np.argmax(winnumAI)
     #print(winnumAI)
     #print(winnumyou)
     #print("index_min",index_min)

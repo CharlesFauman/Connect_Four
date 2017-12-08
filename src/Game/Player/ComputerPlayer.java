@@ -48,7 +48,9 @@ public class ComputerPlayer extends Player {
 				try {
 					final Future<Boolean> set_up = service.submit(() -> {
 						try {
-							if(ReadFromProgram() != 'p') throw new IOException("did not respond with p");
+							if(ReadFromProgram() != 'p') {
+								throw new IOException("did not respond with p");
+							}
 							if(first) {
 								WriteToProgram("1");
 							}else {

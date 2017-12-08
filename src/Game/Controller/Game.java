@@ -90,18 +90,18 @@ public class Game {
 				// now tell the opponent what move was just made
 				if(move == -1) first_player.PlayOpponentMove(column, row);
 				else second_player.PlayOpponentMove(column, row);
-	
-				// check if the game is a draw, and if so notify the view and end the game
-				if(model.isDrawn()) {
-					view.NotifyDrawn();
-					win = 0;
-					break;
-				}
 				
 				// check if the game is a won, and if so notify the view and end the game
 				if(model.isWon()) {
 					view.NotifyWin();
 					win = move;
+					break;
+				}
+				
+				// check if the game is a draw, and if so notify the view and end the game
+				if(model.isDrawn()) {
+					view.NotifyDrawn();
+					win = 0;
 					break;
 				}
 				
