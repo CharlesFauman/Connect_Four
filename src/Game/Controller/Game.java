@@ -120,7 +120,7 @@ public class Game {
 		return win;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		List<String[]> player_infos = new ArrayList<String[]>();
 		
 		try(BufferedReader tournament_reader = new BufferedReader( new FileReader("src/Game/Resources/match_info.txt"));){
@@ -136,6 +136,7 @@ public class Game {
 		
 		MatchInfo m = new MatchInfo("GUIView", player_infos.get(0), player_infos.get(1));
 		Game game = new Game(m);
+		game.start();
 		System.out.println("Press Enter to end game:");
 		Scanner reader = new Scanner(System.in);
 		reader.nextLine();
